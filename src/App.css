@@ -3,3 +3,8 @@ body {
   /* This padding will help give extra space between collection-item div. */
   padding:20px 60px;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
