@@ -6,7 +6,6 @@ const SignInAndSignUpPage = () => (
 
     <div className='sign-in-and-sign-up'>
         <SignIn/>
-
     </div>
 );
 
