@@ -8,3 +8,8 @@ a {
   text-decoration: none;
   color: black;
 }
+
+/* Unisersal selector */
+* {
+  box-sizing: border-box;
+}
