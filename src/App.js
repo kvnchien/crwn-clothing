@@ -10,7 +10,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from './components/header/header.component';
 //import AnotherPage from './test/anotherpage.component';
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 // const HatsPage = () => (
 //   <div>
@@ -36,9 +36,10 @@ class App extends React.Component {
     //the auth.onAuthStateChanged 'open subscription' which feed the 
     //'user' object into the onAuthStateChanged function... 
     console.log("===> App.js is mounted!!")
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({currentUser: user});
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+      //this.setState({currentUser: user});
       //console.log("===> In App.js componentDidMount, the currentUser is: " + JSON.stringify(user.email));
+      createUserProfileDocument(user);
       console.log("===> In App.js componentDidMount, the currentUser is: " + user);
     });    
   }
