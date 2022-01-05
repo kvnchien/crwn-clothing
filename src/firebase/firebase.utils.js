@@ -16,16 +16,32 @@ const config = {
 
   //Handle Create User Profile in Firestore
   export const createUserProfileDocument = async (userAuth, additionalData) => {
+    
     console.log("===> In createUserProfileDocument: ");
     if(!userAuth) return;
 
-    const userRef = firestore.doc('users/eMquSQPRzdhIr06H6sLT')
-    console.log("===> userRef: ");
-    console.log(userRef);
+    //1. Locate a user ref in Firestore
+    //const userRef = firestore.doc('users/eMquSQPRzdhIr06H6sLT')
+    //console.log("===> userRef: ");
+    //console.log(userRef);
+    const userRef = firestore.doc(`users/${userAuth.uid}`)
+    //console.log("===> userAuth.uid: ");
+    //console.log(userAuth.uid);
 
+    //2. Get a snapshot based on the user ref object 
     const snapShot = await userRef.get();
     console.log("===> snapShot: ");
     console.log(snapShot);
+
+    //3. Check if the user ref snapshot is found in the Firestore
+    if(!snapShot.exists) {
+        //3a. Retrieve the displayName and email information 
+        //    from the Firebase user authentication session
+        const{displayname, email} = userAuth;
+        const craetedAt = new Date();
+
+        //3b. Create a record in the Firestore storage
+    }
     
   }
 
