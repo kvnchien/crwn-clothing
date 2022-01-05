@@ -35,12 +35,13 @@ class App extends React.Component {
     //Firebase gives you the state change detection capability with
     //the auth.onAuthStateChanged 'open subscription' which feed the 
     //'user' object into the onAuthStateChanged function... 
-    console.log("===> App.js is mounted!!")
+    console.log("===> In App.js componentDidMount, the App component is mounted, calling onAuthStateChanged...");
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
       //this.setState({currentUser: user});
       //console.log("===> In App.js componentDidMount, the currentUser is: " + JSON.stringify(user.email));
+      console.log("===> Executed auth.onAuthStateChanged: The currentUser is: " + user);
       createUserProfileDocument(user);
-      console.log("===> In App.js componentDidMount, the currentUser is: " + user);
+      
     });    
   }
 
