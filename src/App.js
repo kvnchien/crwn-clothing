@@ -11,6 +11,7 @@ import Header from './components/header/header.component';
 //import AnotherPage from './test/anotherpage.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { snapshotEqual } from 'firebase/firestore';
 
 // const HatsPage = () => (
 //   <div>
@@ -33,14 +34,45 @@ class App extends React.Component {
 
   componentDidMount() {
     //Firebase gives you the state change detection capability with
-    //the auth.onAuthStateChanged 'open subscription' which feed the 
+    //the auth.onAuthStateChanged 'open subscription' which feeds the 
     //'user' object into the onAuthStateChanged function... 
     console.log("===> In App.js componentDidMount, the App component is mounted, calling onAuthStateChanged...");
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      //this.setState({currentUser: user});
-      //console.log("===> In App.js componentDidMount, the currentUser is: " + JSON.stringify(user.email));
-      console.log("===> Executed auth.onAuthStateChanged: The currentUser is: " + user);
-      createUserProfileDocument(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      //this.setState({currentUser: userAuth});
+      //console.log("===> In App.js componentDidMount, the currentUser is: " + JSON.stringify(userAuth.email));
+      console.log("===> Executed auth.onAuthStateChanged: The currentUser is: " + userAuth);
+      
+      if(userAuth) {
+        //If the 'user' object is not null, then we need to persist the user
+        //in the Firestore DB
+        const userRef = await createUserProfileDocument(userAuth);
+
+        //After persisting the user in the Firestore DB, the user info
+        //needs to be saved to the currentUser object in the this.state
+        //by polling from the userRef object returned from the 
+        //'createUserProfileDocument() function above
+        userRef.onSnapshot(snapShot => {
+          //console.log(snapShot.data())
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          }, () => {
+            //We pass in a second function here (an arrow function)
+            //in order to log the this.state after the this.setState is done executing
+            //because the this.setState is an async function.....
+            console.log("In onSnapShot inside the this.setState...")
+            console.log(this.state);
+          })
+        });
+        
+
+      } else {
+        //The 'user' object is null, so set the null userAuth to the currentUser in the this.state
+        this.setState({currentUser: userAuth})
+        //this.setState({currentUser: null})
+      }
       
     });    
   }

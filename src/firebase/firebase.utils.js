@@ -37,11 +37,21 @@ const config = {
     if(!snapShot.exists) {
         //3a. Retrieve the displayName and email information 
         //    from the Firebase user authentication session
-        const{displayname, email} = userAuth;
-        const craetedAt = new Date();
+        const{displayName, email} = userAuth;
+        const createdAt = new Date();
 
-        //3b. Create a record in the Firestore storage
+        //3b. Create a record in the Firestore storage 
+        //    (because an existing user is not found in the Firestore DB )
+        try {
+          await userRef.set({
+            displayName, email, createdAt, ...additionalData
+          })
+        } catch (error) {
+          console.log('error creating user', error.message);
+        }
     }
+
+    return userRef;
     
   }
 
