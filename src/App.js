@@ -11,7 +11,6 @@ import Header from './components/header/header.component';
 //import AnotherPage from './test/anotherpage.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { snapshotEqual } from 'firebase/firestore';
 
 // const HatsPage = () => (
 //   <div>
@@ -64,7 +63,7 @@ class App extends React.Component {
             //because the this.setState is an async function.....
             console.log("In onSnapShot inside the this.setState...")
             console.log(this.state);
-          })
+          });
         });
         
 
