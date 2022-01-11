@@ -39,6 +39,7 @@ class SignUp extends React.Component {
                 confirmPassword:''
             })
         }catch(error) {
+            console.error("===> Signup error: ");
             console.error(error);
         }
     }
@@ -54,7 +55,7 @@ class SignUp extends React.Component {
             <div className='sign-up'>
                 <h2 className='title'>I do not have an account</h2>
                 <span>Sign up with your email and password</span>
-                <form className='sign-up-form' onSubmit={this.handleSubmit}>
+                <form className='sign-up-form' onSubmit={this.handleSubmity}>
                     <FormInput type='text' name='displayName' value={displayName} onChange={this.handleChange} label='Display name' required />     
                     <FormInput type='email' name='email' value={email} onChange={this.handleChange} label='Email' required />                 
                     <FormInput type='password' name='password' value={password} onChange={this.handleChange} label='Password' required />

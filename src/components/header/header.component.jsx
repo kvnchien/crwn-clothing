@@ -21,7 +21,7 @@ const Header = ({currentUser}) => (
                 If the 'currentUser is null, there's no user currently logged in... */}
             {
                 currentUser ?
-                <div className='option' onClickCapture={() => auth.signOut()}>SIGN OUT</div>
+                <div className='option' onClickCapture={() => auth.signOut()}>SIGN OUT ({currentUser.displayName})</div>
                 :
                 <Link className='option' to='/signin'>SIGN IN</Link>
             }
