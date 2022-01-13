@@ -64,6 +64,9 @@ class App extends React.Component {
             console.log("In onSnapShot inside the this.setState...")
             console.log(this.state);
           });
+
+          console.log("===> Whenever the this.state is changed: ")
+          console.log(this.state);
         });
         
 

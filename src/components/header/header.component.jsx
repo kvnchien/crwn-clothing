@@ -5,6 +5,8 @@ import {ReactComponent as Logo} from '../../assets/crown.svg'
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase.utils';
 
+import { connect } from 'react-redux';
+
 const Header = ({currentUser}) => (
     <div className='header'>
         <Link className='logo-container' to="/">
@@ -29,4 +31,11 @@ const Header = ({currentUser}) => (
     </div>
 )
 
-export default Header;
+//This is the stand naming with the Redux codebases. You can't use other names
+const mapStateToProps = () => {
+
+}
+//export default Header;
+//Wire the Header component with Redux
+//using the higher-order component 'connect'
+export default connect()(Header)
