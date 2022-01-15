@@ -89,7 +89,8 @@ class App extends React.Component {
         {/* The following <Switch/> and <Route/> are react-router-dom 5.x feature
             The react-router-dom 6 uses <Routers/> in place of <Switch/> 
         */}
-        <Header currentUser={this.state.currentUser}/>
+        {/* <Header currentUser={this.state.currentUser}/>   <== We don't use this 'react' way to get the currentUser*/}
+        <Header/>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
