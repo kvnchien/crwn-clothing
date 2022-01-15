@@ -17,7 +17,7 @@ const config = {
   //Handle Create User Profile in Firestore
   export const createUserProfileDocument = async (userAuth, additionalData) => {
     
-    console.log("===> In createUserProfileDocument: ");
+    console.log("===> Stepping in firebase.utils.js createUserProfileDocument: ");
     if(!userAuth) return;
 
     //1. Locate a user ref in Firestore
@@ -30,7 +30,7 @@ const config = {
 
     //2. Get a snapshot based on the user ref object 
     const snapShot = await userRef.get();
-    console.log("===> snapShot: ");
+    console.log("===> In firebase.utils.js createUserProfileDocument, getting a firestore snapShot from userRef: ");
     console.log(snapShot);
 
     //3. Check if the user ref snapshot is found in the Firestore

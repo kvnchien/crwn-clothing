@@ -7,29 +7,32 @@ import { auth } from '../../firebase/firebase.utils';
 
 import { connect } from 'react-redux';
 
-const Header = ({currentUser}) => (
-    <div className='header'>
-        <Link className='logo-container' to="/">
-            <Logo className='logo'/>
-        </Link>
-        <div className='options'>
-            <Link className='option' to='/shop'>
-                SHOP
+const Header = ({currentUser}) => {
+    console.log("===> Buildeing the <Header/> component...");
+    return (
+        <div className='header'>
+            <Link className='logo-container' to="/">
+                <Logo className='logo'/>
             </Link>
-            <Link className='option' to='/shop'>
-                CONTACT
-            </Link>
-            {/* Evaluate the 'currentUser' object passed from the App.js
-                If the 'currentUser is null, there's no user currently logged in... */}
-            {
-                currentUser ?
-                <div className='option' onClickCapture={() => auth.signOut()}>SIGN OUT ({currentUser.displayName})</div>
-                :
-                <Link className='option' to='/signin'>SIGN IN</Link>
-            }
+            <div className='options'>
+                <Link className='option' to='/shop'>
+                    SHOP
+                </Link>
+                <Link className='option' to='/shop'>
+                    CONTACT
+                </Link>
+                {/* Evaluate the 'currentUser' object passed from the App.js
+                    If the 'currentUser is null, there's no user currently logged in... */}
+                {
+                    currentUser ?
+                    <div className='option' onClickCapture={() => auth.signOut()}>LOGOUT ({currentUser.displayName})</div>
+                    :
+                    <Link className='option' to='/signin'>SIGN IN</Link>
+                }
+            </div>
         </div>
-    </div>
-)
+    )
+        }
 
 //This is the standard naming with the Redux codebases. You can't use other names
 //What we are getting from this function is the 'state' object which is actually a reference 

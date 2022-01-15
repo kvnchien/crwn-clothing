@@ -1,6 +1,7 @@
 import React from 'react';
 //This is a react-router-dom 5.x feature
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.css';
 
@@ -8,40 +9,29 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
-//import AnotherPage from './test/anotherpage.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { setCurrentUser } from './redux/user/user-actions'
 
-// const HatsPage = () => (
-//   <div>
-//     <h1>HATS PAGE </h1>
-//   </div>
-// );
 
 class App extends React.Component {
 
   //For Firebase user authentication handling
   unsubscribeFromAuth = null;
 
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    }
-  }
-
   componentDidMount() {
+
+    //The "setCurrentUser" is provided in the props when the 'connect' is used in the export default..
+    //The mapDispatchToProps function setup for the 'connect' function does the work for you. 
+    const {setCurrentUser} = this.props;
+
     //Firebase gives you the state change detection capability with
     //the auth.onAuthStateChanged 'open subscription' which feeds the 
     //'user' object into the onAuthStateChanged function... 
     console.log("===> In App.js componentDidMount, the App component is mounted, calling onAuthStateChanged...");
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      //this.setState({currentUser: userAuth});
-      //console.log("===> In App.js componentDidMount, the currentUser is: " + JSON.stringify(userAuth.email));
-      console.log("===> Executed auth.onAuthStateChanged: The currentUser is: " + userAuth);
-      
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {     
       if(userAuth) {
+        console.log("===> Executed auth.onAuthStateChanged: The currentUser is: " + JSON.stringify(userAuth.email));
         //If the 'user' object is not null, then we need to persist the user
         //in the Firestore DB
         const userRef = await createUserProfileDocument(userAuth);
@@ -51,29 +41,20 @@ class App extends React.Component {
         //by polling from the userRef object returned from the 
         //'createUserProfileDocument() function above
         userRef.onSnapshot(snapShot => {
-          //console.log(snapShot.data())
-          this.setState({
-            currentUser: {
+          //The 'setCurrentUser' is declared & assigned at the beginning of the componentDidMount function
+          console.log("===> In App.js componentDidMount:userRef.onSnapshot:");
+          console.log(snapShot.id)
+          //user-actions.js setCurrentUser takes a 'user' object as an argument.
+          //So the entire object we are passing into the setCurrentUser is the 'user' object... 
+          setCurrentUser({
               id: snapShot.id,
               ...snapShot.data()
-            }
-          }, () => {
-            //We pass in a second function here (an arrow function)
-            //in order to log the this.state after the this.setState is done executing
-            //because the this.setState is an async function.....
-            console.log("In onSnapShot inside the this.setState...")
-            console.log(this.state);
+            })
           });
-
-          console.log("===> Whenever the this.state is changed: ")
-          console.log(this.state);
-        });
-        
-
+     
       } else {
-        //The 'user' object is null, so set the null userAuth to the currentUser in the this.state
-        this.setState({currentUser: userAuth})
-        //this.setState({currentUser: null})
+        console.log("===> Executed auth.onAuthStateChanged and the user is logged out");
+        setCurrentUser(userAuth);
       }
       
     });    
@@ -105,4 +86,15 @@ class App extends React.Component {
 
 }
 
-export default App;
+//The "mapDispatchToProps" functions are expected to return an object. 
+//Each fields of the object should be a function, calling which is expected to dispatch an action to the store.
+const mapDispatchToProps = dispatch => ({
+  //You have to use the "setCurrentUser" as the object key because
+  //it has to match the action's function definition. 
+  //The following WILL NOT WORK: 
+  //     setCurrentUserXyz: user => dispatch(setCurrentUser(user))
+  //because the 'setCurrentUserXyz' does not match with the function defined in teh user-actions.js
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(null, mapDispatchToProps)(App);
