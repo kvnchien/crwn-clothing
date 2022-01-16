@@ -4,10 +4,12 @@ import {ReactComponent as Logo} from '../../assets/crown.svg'
 
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase.utils';
+import CartIcon  from '../cart-icon/cart-icon.component';
+import CareDropdown from '../cart/cart-dropdown/cart-dropdown.component';
 
 import { connect } from 'react-redux';
 
-const Header = ({currentUser}) => {
+const Header = ({currentUser, hidden}) => {
     console.log("===> Buildeing the <Header/> component...");
     return (
         <div className='header'>
@@ -29,7 +31,13 @@ const Header = ({currentUser}) => {
                     :
                     <Link className='option' to='/signin'>SIGN IN</Link>
                 }
+
+                <CartIcon />
             </div>
+            {
+                hidden  ? null : <CareDropdown />
+            }
+          
         </div>
     )
         }
@@ -37,9 +45,20 @@ const Header = ({currentUser}) => {
 //This is the standard naming with the Redux codebases. You can't use other names
 //What we are getting from this function is the 'state' object which is actually a reference 
 //to the Root Reducer. This is the default implemenation given to you by Redux...
+/*
 const mapStateToProps = (state) => ({
     //The 'state' object here is actually the root reducer object
     currentUser: state.user.currentUser
+})
+*/
+
+//Using the advanced destructuring - 
+//a. Get the nested 'currentUser' object from the destructured 'user' object in the root reducer out of the 'state' object in the user.reducer.
+//b. Get the nested 'hidden' object from the destructured 'cart' object in the root reducer of ot the 'state' object in the cart.reducer
+const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+    //The 'state' object here is actually the root reducer object
+    currentUser: currentUser, 
+    hidden: hidden
 })
 
 //The reducx connect() funcaton accepts four different parameters, all optional. By convention, they are called:

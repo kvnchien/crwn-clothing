@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 //If the state is not set, we set the state to the initial state
 const userReducer = (state = INITIAL_STATE, action) => {
-
+    console.log("===> Invoked userReducer......")
     switch(action.type) {
         case UserActionTypes.SET_CURRENT_USER:
             return {

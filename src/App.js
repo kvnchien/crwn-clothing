@@ -105,13 +105,19 @@ const mapStateToProps = ({user}) => ({
 
 //The "mapDispatchToProps" functions are expected to return an object. 
 //Each fields of the object should be a function, calling which is expected to dispatch an action to the store.
-const mapDispatchToProps = dispatch => ({
-  //You have to use the "setCurrentUser" as the object key because
-  //it has to match the action's function definition. 
-  //The following WILL NOT WORK: 
-  //     setCurrentUserXyz: user => dispatch(setCurrentUser(user))
-  //because the 'setCurrentUserXyz' does not match with the function defined in teh user-actions.js
+const mapDispatchToProps = dispatch => {
+  console.log("===> Invoked mapDispatchToProps():");
+  return({
+  //a. You have to use the "setCurrentUser" as the object key because
+  //   it has to match the action's function definition. 
+  //   
+  //   The following WILL NOT WORK: 
+  //      setCurrentUserXyz: user => dispatch(setCurrentUser(user))
+  //   because the 'setCurrentUserXyz' does not match with the function defined in teh user-actions.js
+  //
+  //b. The 'user' is the parameter object in the setCurrentUser function. The object is injected by the mapDispatchToPorps
   setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+  });
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
