@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
-import rootReducer from './root-reducer';
+import rootReducer from './root.reducer';
 
 //The middlewares that we are going to pass into the 'createStore' function is an array. 
 //So we just add the logger object to an array and assign to the middlewares object
