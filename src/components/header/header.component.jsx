@@ -37,7 +37,6 @@ const Header = ({currentUser, hidden}) => {
             {
                 hidden  ? null : <CareDropdown />
             }
-          
         </div>
     )
         }
