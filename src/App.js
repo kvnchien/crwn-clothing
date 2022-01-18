@@ -108,13 +108,8 @@ const mapStateToProps = ({user}) => ({
 const mapDispatchToProps = dispatch => {
   console.log("===> Invoked mapDispatchToProps():");
   return({
-  //a. You have to use the "setCurrentUser" as the object key because
-  //   it has to match the action's function definition. 
-  //   
-  //   The following WILL NOT WORK: 
-  //      setCurrentUserXyz: user => dispatch(setCurrentUser(user))
-  //   because the 'setCurrentUserXyz' does not match with the function defined in teh user-actions.js
-  //
+  //a. The 'setCurrentUser' is an object key (mapped as a prop by redux) that points to a function to dispatch the 
+  //   setCurrentUser() action
   //b. The 'user' is the parameter object in the setCurrentUser function. The object is injected by the mapDispatchToPorps
   setCurrentUser: user => dispatch(setCurrentUser(user))
   });
