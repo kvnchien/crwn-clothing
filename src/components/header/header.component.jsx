@@ -5,7 +5,7 @@ import {ReactComponent as Logo} from '../../assets/crown.svg'
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon  from '../cart-icon/cart-icon.component';
-import CareDropdown from '../cart/cart-dropdown/cart-dropdown.component';
+import CareDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import { connect } from 'react-redux';
 
