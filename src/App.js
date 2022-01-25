@@ -13,6 +13,10 @@ import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 
+import { selectCurrentUser } from './redux/user/user.selector';
+import { createStructuredSelector } from 'reselect';
+
+
 class App extends React.Component {
 
   //For Firebase user authentication handling
@@ -89,18 +93,22 @@ class App extends React.Component {
 //This is the standard naming with the Redux codebases. You can't use other names
 //What we are getting from this function is the 'state' object which is actually a reference 
 //to the Root Reducer. This is the default implemenation given to you by Redux...
-/* 
-const mapStateToProps = (state) => ({
-  //The 'state' object here is actually the root reducer object
-  currentUser: state.user.currentUser
-}) 
-*/
-//The above code can be simplified with destructuring
-const mapStateToProps = ({user}) => ({
-  //The 'state' object here is actually the root reducer object
-  currentUser: user.currentUser
-})
+// const mapStateToProps = (state) => ({
+//   //The 'state' object here is actually the root reducer object
+//   currentUser: state.user.currentUser
+// }) 
 
+//The above code can be simplified with destructuring
+// const mapStateToProps = ({user}) => ({
+//   //The 'state' object here is actually the root reducer object
+//   currentUser: user.currentUser
+// })
+
+//The 'createStructuredSelector' funcation to pass the 'state' object implicitly
+const mapStateToProps = createStructuredSelector({
+  //The 'state' object here is actually the root reducer object
+  currentUser: selectCurrentUser
+})
 
 
 //The "mapDispatchToProps" functions are expected to return an object. 

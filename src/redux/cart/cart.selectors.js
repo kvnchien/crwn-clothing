@@ -8,6 +8,7 @@ There are two type of selectors:
 const selectCart = state => (state.cart);
 //const selectUser = state => (state.user);
 
+//Chain with the 'selectCart'
 export const selectCartItems = createSelector(
     // [selectCart, selectUser],
     // (cart, user) => cart.cartItems
@@ -15,6 +16,7 @@ export const selectCartItems = createSelector(
     cart => cart.cartItems
 );
 
+//Then chain with the 'selectCartItems' 
 export const selectCartItemsCount = createSelector(
     [selectCartItems],
     cartItems => cartItems.reduce(
@@ -22,3 +24,9 @@ export const selectCartItemsCount = createSelector(
             accumulatedQuantity + cartItem.quantity, 0
     )
 )
+
+export const selectCartHidden = createSelector(
+    [selectCart],
+    cart => cart.hidden
+);
+
