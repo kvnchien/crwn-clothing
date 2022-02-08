@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import './checkout-item.styles.scss';
 
@@ -16,4 +17,9 @@ const CheckoutItem = ({ cartItem: { name, imageUrl, price, quantity}}) => (
     </div>
 );
 
-export default CheckoutItem;
+const mapStateToProps = () => {
+
+}
+
+
+export default connect()(CheckoutItem);

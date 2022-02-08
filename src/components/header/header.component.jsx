@@ -1,7 +1,7 @@
 import React from 'react'
 import './header.styles.scss'
-import {ReactComponent as Logo} from '../../assets/crown.svg'
-import logo from '../../assets/logo50x50.png';
+//import {ReactComponent as Logo} from '../../assets/crown.svg'
+import LogoIcon from '../../assets/logo50x50.png';
 
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase.utils';
@@ -20,7 +20,7 @@ const Header = ({currentUser, hidden}) => {
         <div className='header'>
             <Link className='logo-container' to="/">
                {/* <Logo className='logo'/> */}
-               <img className='' src={logo}/>
+               <img alt="logo" className='' src={LogoIcon}/>
             </Link>
             <div className='options'>
                 <Link className='option' to='/shop'>

@@ -26,7 +26,7 @@ const CartDropdown = ({cartItems, history, ...otherProps}) => (
         }
         </div>
         <CustomButton onClick={() => {
-                history.push('./checkout');
+                //history.push('./checkout');
                 otherProps.dispatch(toggleCartHidden());
             }    
         }>GO TO CHECKOUT</CustomButton>
@@ -59,6 +59,7 @@ const mapStateToProps = createStructuredSelector ({
 //with the 'withRouter' function
 export default withRouter(connect(mapStateToProps)(CartDropdown));
 
+//********** READ THIS **********
 //Important note: the Reduct 'connect' function actually passes the 'dispatch' as a prop
 //into the component if the second callback funcation, mapDispatchToProps, is not specified 
 //in the 2nd parameter of the connect()..... 
